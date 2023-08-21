@@ -1,49 +1,9 @@
--- ================ DROP ================
-drop table if exists generos;
-drop table if exists estudiantes;
-drop table if exists periodos;
-drop table if exists rango_edades;
-drop table if exists regiones;
-drop table if exists provincias;
-drop table if exists comunas;
-drop table if exists tipo_instituciones;
-drop table if exists instituciones;
-drop table if exists areas_cinef97;
-drop table if exists subareas_cinef97;
-drop table if exists areas_cinef93;
-drop table if exists subareas_cinef93;
-drop table if exists niveles_globales;
-drop table if exists niveles_carreras1;
-drop table if exists niveles_carreras2;
-drop table if exists jornadas;
-drop table if exists modalidades;
-drop table if exists areas_unesco;
-drop table if exists areas_genericas;
-drop table if exists tipos_planes;
-drop table if exists sedes;
-drop table if exists carreras;
-drop table if exists versiones_carreras;
-drop table if exists titulaciones;
 
-drop sequence if exists seq_generos;
-drop sequence if exists seq_regiones;
-drop sequence if exists seq_provincias;
-drop sequence if exists seq_comunas;
-drop sequence if exists seq_tipo_instituciones;
-drop sequence if exists seq_areas_cinef97;
-drop sequence if exists seq_subareas_cinef97;
-drop sequence if exists seq_areas_cinef93;
-drop sequence if exists seq_subareas_cinef93;
-drop sequence if exists seq_niveles_globales;
-drop sequence if exists seq_niveles_carreras1;
-drop sequence if exists seq_niveles_carreras2;
-drop sequence if exists seq_jornadas;
-drop sequence if exists seq_modalidades;
-drop sequence if exists seq_areas_unesco;
-drop sequence if exists seq_areas_genericas;
-drop sequence if exists seq_tiposplanes;
-drop sequence if exists seq_version_carrera;
-
+/*
+*
+* Heinz G. Beckers Sandoval
+*
+*/
 
 -- =================== GENEROS =================
 create sequence seq_generos;
@@ -275,7 +235,6 @@ create table carreras(
 	nivel1 int,
 	nivel2 int,
 	jornada int,
-	modalidad int,
 	area_generica int,
 	area_unesco int,
 	subarea_f97 int,
@@ -343,20 +302,36 @@ create table versiones_carreras(
 											on update cascade
 
 );
+-- ================ IMPARTEN ======================
+create table imparten(
+	carrera varchar(20),
+	modalidad int,
+	version int,
+	constraint pk_imparte primary key (carrera, modalida, version),
+	constraint fk_carrera_imparten foreign key (carrera)
+								references carreras(cod_unico)
+								on delete no fk_carrera_titulacion	
+								on update cascade,
+	constraint fk_version_imparten foreign key (version)
+								references versiones_carreras(version)
+								on delete no action
+								on update cascade
+);
 
 -- =============== TITULACION =====================
 create table titulaciones(
 	estudiante bigint,
 	carrera varchar(20),
-	version int,
+	modalidad int,
+	version int
 	anno_ing_orig int,
 	sem_ing_orig int,
 	anno_ing_actual int,
 	sem_ing_actual int,
 	fecha_obtencion int,
 	constraint pk_titulacion primary key (estudiante, carrera),
-	constraint fk_carrera_titulacion foreign key (carrera, version)
-									references versiones_carreras(cod_carrera, version)
+	constraint fk_imparten_titulacion foreign key (carrera, modalidad, version)
+									references imparten(carrera, modalidad, version)
 									on delete no action
 									on update cascade,
 	constraint fk_estudiante_titulacion foreign key (estudiante)
