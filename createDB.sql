@@ -1,341 +1,608 @@
 
-/*
-*
-* Heinz G. Beckers Sandoval
-*
-*/
+CREATE SEQUENCE IF NOT EXISTS public.areas_carreras_genericas_id_areagenerica_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+	
+CREATE SEQUENCE IF NOT EXISTS public.areas_cinef_id_areacinef_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+	
+CREATE SEQUENCE IF NOT EXISTS public.areas_unesco_id_areaunesco_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+	
+CREATE SEQUENCE IF NOT EXISTS public.comunas_id_comuna_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+	
 
--- =================== GENEROS =================
-create sequence seq_generos;
-create table generos(
-	id int default nextval('seq_generos'),
-	genero VARCHAR(30),
-	constraint pk_id_genero primary key (id)
-);
+CREATE SEQUENCE IF NOT EXISTS public.jornadas_id_jornada_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+	
+CREATE SEQUENCE IF NOT EXISTS public.modalidades_id_modalidad_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
 
--- ================== ESTUDIANTES =================
-create table estudiantes(
-	mrut bigint,
-	genero int,
-	fecha_nac date,
-	edad_tit int,
-	constraint pk_id_estudiante primary key (mrut),
-	constraint fk_genero_estudiante foreign key (genero) 
-									references generos(id) 
-									on delete set null 
-									on update cascade
-);
+CREATE SEQUENCE IF NOT EXISTS public.niveles_carrera1_id_nivelcarrera1_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
 
 
--- ================= PERIODOS =================
-create table periodos(
-	cat_periodo int,
-	constraint pk_cat_periodo primary key (cat_periodo)
-);
+CREATE SEQUENCE IF NOT EXISTS public.niveles_carreras2_id_nivelcarrera2_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
 
--- ================ RANGO EDADES ==============
-CREATE TABLE rango_edades(
-	inicial int,
-	final int,
-	rango_edad varchar(40),
-	constraint pk_inicial_rango primary key (inicial)
-);
 
--- ================= REGIONES =================
-create sequence seq_regiones;
-create table regiones(
-	id int default nextval('seq_regiones'),
-	region varchar(20),
-	constraint pk_id_region primary key (id),
-);
+CREATE SEQUENCE IF NOT EXISTS public.niveles_globales_id_nivelglobal_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
 
--- ================ PROVINCIAS =================
-create sequence seq_provincias;
-create table provincias(
-	id int default nextval('seq_provincias'),
-	region int not null,
-	provincia varchar(20),
-	constraint pk_id_provincia primary key (id),
-	constraint fk_region_provincia foreign key (region) 
-									references regiones(id)
-									on delete no action
-									on update cascade
-);
+CREATE SEQUENCE IF NOT EXISTS public.provincias_id_provincia_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
 
--- ================ COMUNAS =================
-create sequence seq_comunas;
-create table comunas(
-	id int default nextval('seq_comunas'),
-	provincia int not null,
-	comuna varchar(100),
-	constraint pk_id_comuna primary key (id),
-	constraint fk_provincia_comuna foreign key (provincia)
-									references provincias(id)
-									on delete no action
-									on update cascade
-);
+CREATE SEQUENCE IF NOT EXISTS public.seq_planes
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+	
+CREATE SEQUENCE IF NOT EXISTS public.tipos_planes_id_tipo_plan_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
 
--- ============= TIPO INSTITUCIONES ==========
-create sequence seq_tipo_instituciones;
-create table tipo_instituciones(
-	id int default nextval('seq_tipo_instituciones'),
-	tipo_intitucion varchar(100),
-	id_tipo_institucion int,
-	constraint pk_id_tipoinstitucion primary key (id),
-	constraint fk_id_tipoinstitucion foreign key (id_tipo_institucion)
-									references tipo_instituciones(id)
-									on delete no action
-									on update cascade
-);
+CREATE SEQUENCE IF NOT EXISTS public.subareas_cinef_id_subareacinef93_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
 
--- =============== INSTITUCIONES ==============
-create table instituciones(
-	cod_inst int,
-	nombre varchar(100),
-	tipo_institucion int not null,
-	constraint pk_cod_inst primary key (cod_inst),
-	constraint fk_tipo_institucion foreign key (tipo_institucion)
-									references tipo_instituciones(id)
-									on delete no action
-									on update cascade
-);
+CREATE SEQUENCE IF NOT EXISTS public.subareas_cinef_id_subareacinef_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
 
--- ================ AREA CINE F97 ============
-create sequence seq_areas_cinef97;
-create table areas_cinef97(
-	id int default nextval('seq_areas_cinef97'),
-	area_cinef97 varchar(100),
-	constraint pk_id_areascinef97 primary key (id)
-);
--- ============= SUBAREA CINE F97 =============
-create sequence seq_subareas_cinef97;
-create table subareas_cinef97(
-	id int default nextval('seq_subareas_cinef97'),
-	subarea_cinef97 varchar(100),
-	area_cinef97 int not null,
-	constraint pk_subarea_cinef97 primary key (id),
-	constraint fk_area_cinef97 foreign key (area_cinef97)
-								references area_cinef97(id)
-								on delete no action
-								on update cascade
+
+CREATE TABLE IF NOT EXISTS public.areas_carreras_genericas
+(
+    id_areagenerica integer NOT NULL DEFAULT nextval('areas_carreras_genericas_id_areagenerica_seq'::regclass),
+    areagenerica character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT areas_carreras_genericas_pkey PRIMARY KEY (id_areagenerica)
 );
 
--- ================ AREA CINE F93 ============
-create sequence seq_areas_cinef93;
-create table areas_cinef93(
-	id int default nextval('seq_areas_cinef93'),
-	area_cinef93 varchar(100),
-	constraint pk_id_areascinef93 primary key
-);
--- ============= SUBAREA CINE F93 =============
-create sequence seq_subareas_cinef93;
-create table subareas_cinef93(
-	id int default nextval('seq_subareas_cinef93'),
-	subarea_cinef93 varchar(100),
-	area_cinef93 int not null,
-	constraint pk_subarea_cinef93 primary key (id),
-	constraint fk_area_cinef93 foreign key (area_cinef93)
-								references area_cinef93(id)
-								on delete no action
-								on update cascade
+CREATE TABLE IF NOT EXISTS public.areas_cinef93
+(
+    id_areacinef integer NOT NULL DEFAULT nextval('areas_cinef_id_areacinef_seq'::regclass),
+    areacinesf character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT areas_cinef93_pkey PRIMARY KEY (id_areacinef)
 );
 
--- ============== NIVELES GLOBALES ============
-create sequence seq_niveles_globales;
-create table niveles_globales(
-	id int default nextval('seq_niveles_globales'),
-	nivelglobal varchar(100),
-	constraint pk_nivel_global primary key (id)
-);
--- ============== NIVELES CARRERA 1 ===========
-create sequence seq_niveles_carreras1;
-create table niveles_carreras1(
-	id int default nextval('seq_niveles_carreras1'),
-	nivel_global int not null,
-	nivel_carrera1 varchar(50),
-	constraint pk_nivel_carrera1 primary key (id),
-	constraint fk_nivel_global foreign key (nivel_global)
-								references niveles_globales(id)
-								on delete no action
-								on update cascade
-);
--- ============== NIVELES CARRERA 2 ===========
-create sequence seq_niveles_carreras2;
-create table niveles_carreras2(
-	id int default nextval('seq_niveles_carreras2'),
-	nivel_global int not null,
-	nivel_carrera2 varchar(50),
-	constraint pk_nivel_carrera2 primary key (id),
-	constraint fk_nivel_global foreign key (nivel_global)
-								references niveles_globales(id)
-								on delete no action
-								on update cascade
+CREATE TABLE IF NOT EXISTS public.areas_cinef97
+(
+    id_areacinef integer NOT NULL DEFAULT nextval('areas_cinef_id_areacinef_seq'::regclass),
+    areacinesf character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT areas_cinef_pkey PRIMARY KEY (id_areacinef)
 );
 
--- ================= JORNADAS ================
-create sequence seq_jornadas;
-create table jornadas(
-	id int,
-	nombre VARCHAR(50),
-	constraint pk_jornada primary key (id)
+CREATE TABLE IF NOT EXISTS public.areas_unesco
+(
+    id_areaunesco integer NOT NULL DEFAULT nextval('areas_unesco_id_areaunesco_seq'::regclass),
+    areaunesco character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT areas_unesco_pkey PRIMARY KEY (id_areaunesco)
 );
 
--- ================ MODALIDAD ================
-create sequence seq_modalidades;
-create table modalidades(
-	id int,
-	nombre VARCHAR(50),
-	constraint pk_modalidad primary key (id)
+CREATE TABLE IF NOT EXISTS public.carreras
+(
+    codigo_unico character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    cod_carrera integer NOT NULL,
+    nombrecarrera character varying(250) COLLATE pg_catalog."default" NOT NULL,
+    institucion integer NOT NULL,
+    sede integer NOT NULL,
+    nivelcarrera1 integer NOT NULL,
+    nivelcarrera2 integer NOT NULL,
+    jornada integer NOT NULL,
+    modalidad integer NOT NULL,
+    areacarrgenerica integer NOT NULL,
+    subareacinef97 integer,
+    areaunesco integer,
+    nivel_carrera1 integer,
+    nivel_carrera2 integer NOT NULL,
+    tipo_plan_carrera integer NOT NULL,
+    subareacine93 integer NOT NULL,
+    CONSTRAINT carreras_pkey PRIMARY KEY (codigo_unico)
 );
 
--- ================ AREA UNESCO ================
-create sequence seq_areas_unesco;
-create table areas_unesco(
-	id int,
-	nombre VARCHAR(50),
-	constraint pk_area_unesco primary key (id)
+CREATE TABLE IF NOT EXISTS public.carrerasversiones
+(
+    carrera character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    version integer NOT NULL,
+    duracionestudio integer NOT NULL,
+    duraciontitulacion integer NOT NULL,
+    duraciontotal integer NOT NULL,
+    CONSTRAINT carrerasversiones_pkey PRIMARY KEY (carrera, version)
 );
 
--- ================ AREA GENERICA ================
-create sequence seq_areas_genericas;
-create table areas_genericas(
-	id int,
-	nombre VARCHAR(100),
-	constraint pk_area_generica primary key (id)
+CREATE TABLE IF NOT EXISTS public.comunas
+(
+    id_provincia integer NOT NULL,
+    id_comuna integer NOT NULL DEFAULT nextval('comunas_id_comuna_seq'::regclass),
+    comuna character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT comunas_pkey PRIMARY KEY (id_comuna)
 );
 
--- ================ TIPOS PLAN ================
-create sequence seq_tiposplanes;
-create table tipos_planes(
-	id int,
-	nombre VARCHAR(50),
-	constraint pk_tipoplan primary key (id)
+CREATE TABLE IF NOT EXISTS public.estudiantes
+(
+    mrut bigint NOT NULL,
+    gen_alu integer NOT NULL,
+    fecha_nac_alu date NOT NULL,
+    edad_tit_alumno integer NOT NULL ,
+    CONSTRAINT estudiantes_pkey PRIMARY KEY (mrut),
+    CONSTRAINT ck_edad_alumno check (edad_tit_alumno > 14)
 );
 
--- ================== SEDES ==================
-create table sedes(
-	cod_inst int,
-	cod_sede int,
-	nombre varchar(100),
-	comuna int,
-	constraint pk_sede primary key (cod_inst, cod_sede),
-	constraint fk_comuna_sede foreign key (comuna)
-							references comunas(id)
-							on delete no action
-							on update cascade
+CREATE TABLE IF NOT EXISTS public.generos
+(
+    id_genero integer NOT NULL,
+    genero character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT generos_pkey PRIMARY KEY (id_genero)
 );
 
--- ================= CARRERAS =================
-create table carreras(
-	cod_unico varchar(20),
-	cod_carrera int,
-	nombre varchar(100),
-	institucion int ,
-	sede int,
-	nivel1 int,
-	nivel2 int,
-	jornada int,
-	area_generica int,
-	area_unesco int,
-	subarea_f97 int,
-	tipo_plan int,
-	subarea_f93 int,
-	constraint pk_cod_unicocarrera primary key (cod_unico),
-	constraint fk_institucion_carrera foreign key (institucion)
-										references instituciones(id)
-										on delete no action
-										on update cascade,
-	constraint fk_sede_carrera foreign key (sede)
-										references sedes(id)
-										on delete no action
-										on update cascade,
-	constraint fk_nivel1_carrera foreign key (nivel1)
-										references nivel_carrera1(id)
-										on delete no action
-										on update cascade,
-	constraint fk_nivel2_carrera foreign key (nivel2)
-										references nivel_carrera2(id)
-										on delete no action
-										on update cascade,
-	constraint fk_jornada_carrera foreign key (jornada)
-										references jornadas(id)
-										on delete no action
-										on update cascade,
-	constraint fk_modalidad_carrera foreign key (modalidad)
-										references modalidades(id)
-										on delete no action
-										on update cascade,
-	constraint fk_areagenerica_carrera foreign key (area_generica)
-										references areas_genericas(id)
-										on delete no action
-										on update cascade,
-	constraint fk_areaunesco_carrera foreign key (area_unesco)
-										references areas_unesco(id)
-										on delete no action
-										on update cascade,
-	constraint fk_subareacinef93_carrera foreign key (subarea_f93)
-										references subareas_cinef93(id)
-										on delete no action
-										on update cascade,
-	constraint fk_subareacinef97_carrera foreign key (subarea_f97)
-										references subareas_cinef97(id)
-										on delete no action
-										on update cascade,
-	constraint fk_tipoplan_carrera foreign key (tipo_plan)
-										references tipos_planes(id)
-										on delete no action
-										on update cascade									
-); 
-
--- ================ VERSIONES CARRERAS =============
-create sequence seq_version_carrera;
-create table versiones_carreras(
-	cod_carrera varchar(20),
-	version int default nextval('seq_version_carrera'),
-	dur_estudio int,
-	dur_titulacion int,
-	dur_total int,
-	constraint pk_versioncarrera primary key (cod_carrera, version),
-	constraint fk_codcarrera_versionescarrera foreign key (cod_carrera)
-											references carreras(cod_unico)
-											on delete no action
-											on update cascade
-
-);
--- ================ IMPARTEN ======================
-create table imparten(
-	carrera varchar(20),
-	modalidad int,
-	version int,
-	constraint pk_imparte primary key (carrera, modalida, version),
-	constraint fk_carrera_imparten foreign key (carrera)
-								references carreras(cod_unico)
-								on delete no fk_carrera_titulacion	
-								on update cascade,
-	constraint fk_version_imparten foreign key (version)
-								references versiones_carreras(version)
-								on delete no action
-								on update cascade
+CREATE TABLE IF NOT EXISTS public.imparten
+(
+    codigounico character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    version integer NOT NULL,
+    sucursal integer NOT NULL,
+    modalidad integer NOT NULL,
+    institucion integer NOT NULL,
+    CONSTRAINT imparten_pkey PRIMARY KEY (codigounico, version, sucursal, modalidad, institucion)
 );
 
--- =============== TITULACION =====================
-create table titulaciones(
-	estudiante bigint,
-	carrera varchar(20),
-	modalidad int,
-	version int
-	anno_ing_orig int,
-	sem_ing_orig int,
-	anno_ing_actual int,
-	sem_ing_actual int,
-	fecha_obtencion int,
-	constraint pk_titulacion primary key (estudiante, carrera),
-	constraint fk_imparten_titulacion foreign key (carrera, modalidad, version)
-									references imparten(carrera, modalidad, version)
-									on delete no action
-									on update cascade,
-	constraint fk_estudiante_titulacion foreign key (estudiante)
-									references estudiantes(mrut)
-									on delete no action
-									on update cascade
+CREATE TABLE IF NOT EXISTS public.instituciones
+(
+    cod_inst integer NOT NULL,
+    nomb_inst character varying(250) COLLATE pg_catalog."default" NOT NULL,
+    tipo_institucion3 integer NOT NULL,
+    CONSTRAINT instituciones_pkey PRIMARY KEY (cod_inst)
 );
+
+CREATE TABLE IF NOT EXISTS public.jornadas
+(
+    id_jornada integer NOT NULL DEFAULT nextval('jornadas_id_jornada_seq'::regclass),
+    jornada character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT jornadas_pkey PRIMARY KEY (id_jornada)
+);
+
+CREATE TABLE IF NOT EXISTS public.modalidades
+(
+    id_modalidad integer NOT NULL DEFAULT nextval('modalidades_id_modalidad_seq'::regclass),
+    modalidad character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT modalidades_pkey PRIMARY KEY (id_modalidad)
+);
+
+CREATE TABLE IF NOT EXISTS public.niveles_carreras1
+(
+    id_nivelglobal integer NOT NULL,
+    id_nivelcarrera1 integer NOT NULL DEFAULT nextval('niveles_carrera1_id_nivelcarrera1_seq'::regclass),
+    nivelcarrera1 character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT nivelcarrera1_pkey PRIMARY KEY (id_nivelcarrera1)
+);
+
+CREATE TABLE IF NOT EXISTS public.niveles_carreras2
+(
+    id_nivelglobal integer NOT NULL,
+    id_nivelcarrera2 integer NOT NULL DEFAULT nextval('niveles_carreras2_id_nivelcarrera2_seq'::regclass),
+    nivelcarrera2 integer NOT NULL,
+    CONSTRAINT nivel_carrera2_pkey PRIMARY KEY (id_nivelcarrera2)
+);
+
+CREATE TABLE IF NOT EXISTS public.niveles_globales
+(
+    id_nivelglobal integer NOT NULL DEFAULT nextval('niveles_globales_id_nivelglobal_seq'::regclass),
+    nivelglobal character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT niveles_globales_pkey PRIMARY KEY (id_nivelglobal)
+);
+
+CREATE TABLE IF NOT EXISTS public.periodos
+(
+    cat_periodo integer NOT NULL,
+    CONSTRAINT periodos_pkey PRIMARY KEY (cat_periodo)
+);
+
+CREATE TABLE IF NOT EXISTS public.provincias
+(
+    id_region integer NOT NULL,
+    id_provincia integer NOT NULL DEFAULT nextval('provincias_id_provincia_seq'::regclass),
+    provincia character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT provincias_pkey PRIMARY KEY (id_provincia)
+);
+
+CREATE TABLE IF NOT EXISTS public.rango_edades
+(
+    edad_inicial integer NOT NULL,
+    edad_final integer NOT NULL,
+    rango_edad character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT rango_edades_pkey PRIMARY KEY (edad_inicial)
+);
+
+CREATE TABLE IF NOT EXISTS public.regiones
+(
+    id_region integer NOT NULL,
+    region character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT regiones_pkey PRIMARY KEY (id_region)
+);
+
+CREATE TABLE IF NOT EXISTS public.sedes
+(
+    cod_inst integer NOT NULL,
+    cod_sede integer NOT NULL,
+    nomb_sede character varying(250) COLLATE pg_catalog."default",
+    comuna integer NOT NULL,
+    CONSTRAINT sedes_pkey PRIMARY KEY (cod_sede, cod_inst)
+);
+
+CREATE TABLE IF NOT EXISTS public.subareas_cinef93
+(
+    id_areacinef integer NOT NULL,
+    id_subareacinef integer NOT NULL DEFAULT nextval('subareas_cinef_id_subareacinef93_seq'::regclass),
+    subareacinef character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT subareacinef93_pkey PRIMARY KEY (id_subareacinef)
+);
+
+CREATE TABLE IF NOT EXISTS public.subareas_cinef97
+(
+    id_areacinef integer NOT NULL,
+    id_subareacinef integer NOT NULL DEFAULT nextval('subareas_cinef_id_subareacinef_seq'::regclass),
+    subareacinef character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT subareacinef97_pkey PRIMARY KEY (id_subareacinef)
+);
+
+CREATE TABLE IF NOT EXISTS public.tipos_instituciones
+(
+    id_tipo_institucion integer NOT NULL,
+    tipo_institucion character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    id_tipo_inst_superior integer,
+    CONSTRAINT tipos_instituciones_pkey PRIMARY KEY (id_tipo_institucion)
+);
+
+CREATE TABLE IF NOT EXISTS public.tipos_planes
+(
+    id_tipo_plan integer NOT NULL DEFAULT nextval('tipos_planes_id_tipo_plan_seq'::regclass),
+    tipo_plan character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT tipos_planes_pkey PRIMARY KEY (id_tipo_plan)
+);
+
+
+CREATE TABLE IF NOT EXISTS public.carrerastitulogrados
+(
+    carrera character varying(20)  NOT NULL,
+    titulogrado char not null default 't',
+    nombretitulogrado character varying(250)  NOT NULL,
+    CONSTRAINT chk_tituloogrado check (titulogrado = 't' or titulogrado = 'g'),
+    CONSTRAINT carrerastitulogrados_pkey PRIMARY KEY (carrera, titulogrado)
+);
+
+
+CREATE TABLE IF NOT EXISTS public.titulaciones
+(
+    alumno integer NOT NULL,
+    carrera character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    titulogrado char not null,
+    "ano_ingreso_Carr_orig" integer NOT NULL,
+    sem_ing_carr_orig integer NOT NULL,
+    ano_ing_carr_actual integer NOT NULL,
+    sem_ing_carr_actual integer NOT NULL,
+    fecha_obt_titulo integer NOT NULL,
+    version integer NOT NULL,
+    sede integer NOT NULL,
+    institucion integer NOT NULL,
+    modalidad integer NOT NULL,
+    CONSTRAINT titulaciones_pkey PRIMARY KEY (alumno, carrera, titulogrado)
+);
+
+
+
+ALTER TABLE IF EXISTS public.carreras
+    ADD CONSTRAINT fk_carrera_tipoplan FOREIGN KEY (tipo_plan_carrera)
+    REFERENCES public.tipos_planes (id_tipo_plan) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.carreras
+    ADD CONSTRAINT fk_carreras_arreascarrerasgenericas FOREIGN KEY (areacarrgenerica)
+    REFERENCES public.areas_carreras_genericas (id_areagenerica) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.carreras
+    ADD CONSTRAINT fk_carreras_arreasunesco FOREIGN KEY (areaunesco)
+    REFERENCES public.areas_unesco (id_areaunesco) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.carreras
+    ADD CONSTRAINT fk_carreras_jornadas FOREIGN KEY (jornada)
+    REFERENCES public.jornadas (id_jornada) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.carreras
+    ADD CONSTRAINT fk_carreras_modalidades FOREIGN KEY (modalidad)
+    REFERENCES public.modalidades (id_modalidad) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.carreras
+    ADD CONSTRAINT fk_carreras_nivel1 FOREIGN KEY (nivel_carrera1)
+    REFERENCES public.niveles_carreras1 (id_nivelcarrera1) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.carreras
+    ADD CONSTRAINT fk_carreras_nivel2 FOREIGN KEY (nivelcarrera2)
+    REFERENCES public.niveles_carreras2 (id_nivelcarrera2) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.carreras
+    ADD CONSTRAINT fk_carreras_sedes FOREIGN KEY (institucion, sede)
+    REFERENCES public.sedes (cod_inst, cod_sede) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.carreras
+    ADD CONSTRAINT fk_carreras_subareacinef93 FOREIGN KEY (subareacine93)
+    REFERENCES public.subareas_cinef93 (id_subareacinef) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public.carreras
+    ADD CONSTRAINT fk_subareacinef FOREIGN KEY (subareacinef97)
+    REFERENCES public.subareas_cinef97 (id_subareacinef) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.carrerasversiones
+    ADD CONSTRAINT fk_carrerasversiones_carreras FOREIGN KEY (carrera)
+    REFERENCES public.carreras (codigo_unico) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.comunas
+    ADD CONSTRAINT fk_comunas_provincias FOREIGN KEY (id_provincia)
+    REFERENCES public.provincias (id_provincia) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.estudiantes
+    ADD CONSTRAINT fk_estudiantes_generos FOREIGN KEY (gen_alu)
+    REFERENCES public.generos (id_genero) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.imparten
+    ADD CONSTRAINT fk_imparten_carrerasversiones FOREIGN KEY (codigounico, version)
+    REFERENCES public.carrerasversiones (carrera, version) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.imparten
+    ADD CONSTRAINT fk_imparten_sedes FOREIGN KEY (institucion, sucursal)
+    REFERENCES public.sedes (cod_inst, cod_sede) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.instituciones
+    ADD CONSTRAINT fk_instituciones_tipoinstitucion FOREIGN KEY (tipo_institucion3)
+    REFERENCES public.tipos_instituciones (id_tipo_institucion) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+
+ALTER TABLE IF EXISTS public.niveles_carreras1
+    ADD CONSTRAINT fk_nivelescarrera1_nivelesgenerales FOREIGN KEY (id_nivelglobal)
+    REFERENCES public.niveles_globales (id_nivelglobal) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.niveles_carreras2
+    ADD CONSTRAINT fk_nivelcarrera2_nivelglobal FOREIGN KEY (id_nivelglobal)
+    REFERENCES public.niveles_globales (id_nivelglobal) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.provincias
+    ADD CONSTRAINT fk_provincias_regiones FOREIGN KEY (id_region)
+    REFERENCES public.regiones (id_region) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.sedes
+    ADD CONSTRAINT fk_sedes_comunas FOREIGN KEY (comuna)
+    REFERENCES public.comunas (id_comuna) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public.sedes
+    ADD CONSTRAINT fk_sedes_instituciones FOREIGN KEY (cod_inst)
+    REFERENCES public.instituciones (cod_inst) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.subareas_cinef93
+    ADD CONSTRAINT fk_subareacinef93_areascinef93 FOREIGN KEY (id_areacinef)
+    REFERENCES public.areas_cinef93 (id_areacinef) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+
+
+ALTER TABLE IF EXISTS public.subareas_cinef97
+    ADD CONSTRAINT fk_subareacinef97_areascinef97 FOREIGN KEY (id_areacinef)
+    REFERENCES public.areas_cinef97 (id_areacinef) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.tipos_instituciones
+    ADD CONSTRAINT fk_tipoinstitucion_tipo_institucion FOREIGN KEY (id_tipo_inst_superior)
+    REFERENCES public.tipos_instituciones (id_tipo_institucion) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public.carrerastitulogrados
+    ADD CONSTRAINT fk_carrerastitulogrados_carreras FOREIGN KEY (carrera)
+    REFERENCES public.carreras (codigo_unico) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.titulaciones
+    ADD CONSTRAINT fk_titulaciones_alumnos FOREIGN KEY (alumno)
+    REFERENCES public.estudiantes (mrut) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.titulaciones
+    ADD CONSTRAINT fk_titulaciones_titulogrado FOREIGN KEY (carrera,titulogrado)
+    REFERENCES public.carrerastitulogrados (carrera,titulogrado) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.titulaciones
+    ADD CONSTRAINT fk_titulaciones_imparten FOREIGN KEY (carrera,version,sede,modalidad,institucion)
+    REFERENCES public.imparten (codigounico,version,sucursal,modalidad,institucion) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+create table traspaso (
+periodo varchar(10),
+codigounico varchar(50),
+rut varchar(25),
+genero varchar(10), 
+fechanacimiento varchar(10),
+rangoedad varchar(50),
+anoingresocarori varchar(5),
+semestreingresocarori varchar(2),
+anoingresocaract varchar(5),
+semestreingresocaract varchar(2),
+nombretitulo varchar(250),
+nombregrado varchar(250),
+fechaobtencion varchar(10),
+tipoinstitucion1 varchar(150),
+tipoinstitucion2 varchar(150),
+tipoinstitucion3 varchar(150),
+codigoinstitucion varchar(10),
+nombreinstitucion varchar(250),
+codigosede varchar(10),
+nombresede varchar(250),
+codigocarrera varchar(10),
+nombrecarrera varchar(250),
+nivelglobal varchar(150),
+nivelcarrera1  varchar(150),
+nivelcarrera2  varchar(150),
+duracionestudio varchar(10),
+duraciontitulacion varchar(10),
+duraciontotal varchar(10),
+region varchar(150),
+provincia varchar(150),
+comuna varchar(150),
+jornada varchar(150),
+modalidad varchar(150),
+version varchar(10),
+tipoplan varchar(100),
+area_unesco verchar(250),
+area_cinef97 verchar(250),
+subarea_cinef97 verchar(250),
+area_cinef13 verchar(250),
+subarea_cinef13 verchar(250),
+area_generica verchar(250)
+);
+
+
+commit;
