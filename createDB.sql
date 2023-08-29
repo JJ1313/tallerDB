@@ -5,28 +5,28 @@ CREATE SEQUENCE IF NOT EXISTS public.areas_carreras_genericas_id_areagenerica_se
     MINVALUE 1
     MAXVALUE 2147483647
     CACHE 1;
-	
+    
 CREATE SEQUENCE IF NOT EXISTS public.areas_cinef_id_areacinef_seq
     INCREMENT 1
     START 1
     MINVALUE 1
     MAXVALUE 2147483647
     CACHE 1;
-	
+    
 CREATE SEQUENCE IF NOT EXISTS public.areas_unesco_id_areaunesco_seq
     INCREMENT 1
     START 1
     MINVALUE 1
     MAXVALUE 2147483647
     CACHE 1;
-	
+    
 CREATE SEQUENCE IF NOT EXISTS public.comunas_id_comuna_seq
     INCREMENT 1
     START 1
     MINVALUE 1
     MAXVALUE 2147483647
     CACHE 1;
-	
+    
 
 CREATE SEQUENCE IF NOT EXISTS public.jornadas_id_jornada_seq
     INCREMENT 1
@@ -34,7 +34,7 @@ CREATE SEQUENCE IF NOT EXISTS public.jornadas_id_jornada_seq
     MINVALUE 1
     MAXVALUE 2147483647
     CACHE 1;
-	
+    
 CREATE SEQUENCE IF NOT EXISTS public.modalidades_id_modalidad_seq
     INCREMENT 1
     START 1
@@ -78,7 +78,7 @@ CREATE SEQUENCE IF NOT EXISTS public.seq_planes
     MINVALUE 1
     MAXVALUE 9223372036854775807
     CACHE 1;
-	
+    
 CREATE SEQUENCE IF NOT EXISTS public.tipos_planes_id_tipo_plan_seq
     INCREMENT 1
     START 1
